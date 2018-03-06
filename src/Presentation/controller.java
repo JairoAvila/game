@@ -8,6 +8,7 @@ import java.awt.event.*;
 public class controller implements MouseListener,ActionListener, ComponentListener, ChangeListener {
 
     private final View ventanaPrincipal;
+    private model modelo;
 
     public controller(View ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
@@ -15,7 +16,7 @@ public class controller implements MouseListener,ActionListener, ComponentListen
 
     public String getMessage() {
         try {
-            model modelo = new model();
+            modelo = new model();
             return modelo.getData();
         } catch (Exception er) {
             return "There was an error.";
@@ -29,8 +30,14 @@ public class controller implements MouseListener,ActionListener, ComponentListen
 
             if (boton == ventanaPrincipal.getIniciar()) {
                 System.out.println("RUN");
-            } else {
+            } else if(boton == ventanaPrincipal.getAvanzar()){
+                System.out.println("AVANZAR");
+            } else if(boton == ventanaPrincipal.getDetener()){
                 System.out.println("STOP");
+            } else if(boton == ventanaPrincipal.getGirar()){
+                System.out.println("GIRAR_HORARIO");
+            } else if(boton == ventanaPrincipal.getGirarA()){
+                System.out.println("GIRAR_ANTIHORARIO");
             }
         }
     }

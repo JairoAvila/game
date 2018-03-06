@@ -13,9 +13,9 @@ public class Rutina{
     private int puntero;
     private Tablero tablero;
 
-    public Rutina(ArrayList<Integer> rutina, Tablero tablero){
+    public Rutina(ArrayList<Integer> rutina){
         this.rutina = rutina;
-        this.tablero = tablero;
+        tablero = new Tablero();
         puntero = 0;
     }
 
@@ -65,4 +65,8 @@ public class Rutina{
         System.out.println("Se borra la partida");
     }
 
+    public
+    Tablero getTablero() {
+        return tablero;
+    }
 }
