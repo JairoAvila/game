@@ -1,5 +1,7 @@
 package logica;
 
+import Presentation.Dibujo;
+
 public class Bot   {
 
     public static final int NORTE = 21;
@@ -7,19 +9,15 @@ public class Bot   {
     public static final int SUR = 23;
     public static final int OCCIDENTE = 24;
 
-    private int posisionX;
-    private int posisionY;
+    private int posisionX=100;
+    private int posisionY=100;
     private int direccion;
+
 
     private Tablero tablero;
 
-    public Bot (int direccion, int posisionX, int posisionY, Tablero tablero){
-        this.direccion = direccion;
-        this.posisionX = posisionX;
-        this.posisionY = posisionY;
-        this.tablero = tablero;
+    public Bot (){
 
-        this.direccion = ORIENTE;
     }
 
     public void GirarHorario (){
@@ -101,28 +99,6 @@ public class Bot   {
         System.out.println("Activo celda");
     }
 
-    @Override
-    public String toString() {
-        String direccion = null;
-
-        switch (this.direccion){
-            case NORTE:
-                direccion = "Norte";
-                break;
-            case ORIENTE:
-                direccion = "Oriente";
-                break;
-            case SUR:
-                direccion = "Sur";
-                break;
-            case OCCIDENTE:
-                direccion = "Occidente";
-                break;
-        }
-
-        return "Bot esta viendo al " + direccion + " en la posición (" + posisionX + "," + posisionY + ")";
-
-    }
 
     public int getDireccion () {
         return direccion;

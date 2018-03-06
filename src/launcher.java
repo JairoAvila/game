@@ -1,10 +1,15 @@
-import Presentation.View;
+import Presentation.model;
 
 public class launcher {
 
-    public static void main(String args[]) {
+    private model myApp;
 
-        View vista = new View();
-        vista.setVisible(true);
+    public launcher() {
+        myApp = new model();
+        myApp.iniciar();
+    }
+
+    public static void main(String args[]) {
+        new launcher();
     }
 }

@@ -1,6 +1,8 @@
 package Presentation;
 
 
+import logica.Bot;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -14,8 +16,8 @@ public class Dibujo extends JPanel {
     private static final int HEIGHT = 140;
     private Rectangle2D[][] casillas = new Rectangle2D[CLUSTER][CLUSTER];
     private Color[][] color = new Color[CLUSTER][CLUSTER];
-    private int xcircle = 0;
-    private int ycircle = 0;
+    private Boolean inicio=true;
+    private Bot robot;
 
     public Dibujo() {
         this.setBounds(20,40,463,463);
@@ -26,25 +28,22 @@ public class Dibujo extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2=(Graphics2D) g;
-        int x = px;
-        int y = py;
-        for(int i = 0; i < CLUSTER; i++) {
-            for (int j = 0; j < CLUSTER; j++) {
-                g2.setPaint(Color.white);
-                casillas[i][j] = new Rectangle2D.Double(x, y, WIDTH, HEIGHT);
-                color[i][j] = g2.getColor();
-                g2.fill(casillas[i][j]);
-                g2.getColor();
-                x = x + WIDTH + 10;
+        if(inicio) {
+            int x = px;
+            int y = py;
+            for (int i = 0; i < CLUSTER; i++) {
+                for (int j = 0; j < CLUSTER; j++) {
+                    g2.setPaint(Color.white);
+                    casillas[i][j] = new Rectangle2D.Double(x, y, WIDTH, HEIGHT);
+                    color[i][j] = g2.getColor();
+                    g2.fill(casillas[i][j]);
+                    g2.getColor();
+                    x = x + WIDTH + 10;
+                }
+                x = px;
+                y = y + HEIGHT + 10;
             }
-            x = px;
-            y = y + HEIGHT + 10;
-        }
-
-        int xx = (int) casillas[xcircle][ycircle].getCenterX();
-        int yy = (int) casillas[xcircle][ycircle].getCenterY();
-        g.setColor(Color.yellow);
-        g.fillRect(xx, yy, 50, 50);
+            inicio = false;
         /*Color blue = Color.white;
         if(blue.equals(color[0][0])){
             System.out.println("true");
@@ -53,14 +52,23 @@ public class Dibujo extends JPanel {
         {
             System.out.println("false");
         }*/
-    }
-
-    public void setXcircle(int xcircle) {
-        this.xcircle = xcircle;
-    }
-
-    public void setYcircle(int ycircle) {
-        this.ycircle = ycircle;
+        }
+        else
+        {
+            for (int i = 0; i < CLUSTER; i++) {
+                for (int j = 0; j < CLUSTER; j++) {
+                    int posx = (int) casillas[i][j].getX();
+                    int posy = (int) casillas[i][j].getY();
+                    int width = (int) casillas[i][j].getWidth();
+                    int height = (int) casillas[i][j].getHeight();
+                    g.setColor(color[i][j]);
+                    g.fillRect(posx,posy,width,height);
+                }
+            }
+            g.setColor(Color.GREEN);
+            g.fillRect(robot.getPosisionX(),robot.getPosisionY(),50,50);
+            System.out.println(robot.getPosisionX());
+        }
     }
 
     public Rectangle2D[][] getCasilla() {
@@ -69,5 +77,17 @@ public class Dibujo extends JPanel {
 
     public Color[][] getColor() {
         return color;
+    }
+
+    public void setColor(Color[][] color) {
+        this.color = color;
+    }
+
+    public Bot getRobot() {
+        return robot;
+    }
+
+    public void setRobot(Bot robot) {
+        this.robot = robot;
     }
 }

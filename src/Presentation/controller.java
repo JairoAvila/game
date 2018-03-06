@@ -3,6 +3,7 @@ package Presentation;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.*;
 
 public class controller implements MouseListener,ActionListener, ComponentListener, ChangeListener {
@@ -12,16 +13,17 @@ public class controller implements MouseListener,ActionListener, ComponentListen
 
     public controller(View ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
+        modelo = ventanaPrincipal.getModelo();
     }
 
-    public String getMessage() {
+    /*public String getMessage() {
         try {
-            modelo = new model();
+            model modelo = new model();
             return modelo.getData();
         } catch (Exception er) {
             return "There was an error.";
         }
-    }
+    }*/
 
     public void actionPerformed(ActionEvent e) {
         int respuesta;
@@ -30,14 +32,10 @@ public class controller implements MouseListener,ActionListener, ComponentListen
 
             if (boton == ventanaPrincipal.getIniciar()) {
                 System.out.println("RUN");
-            } else if(boton == ventanaPrincipal.getAvanzar()){
-                System.out.println("AVANZAR");
-            } else if(boton == ventanaPrincipal.getDetener()){
-                System.out.println("STOP");
-            } else if(boton == ventanaPrincipal.getGirar()){
-                System.out.println("GIRAR_HORARIO");
-            } else if(boton == ventanaPrincipal.getGirarA()){
-                System.out.println("GIRAR_ANTIHORARIO");
+            } else if (boton == ventanaPrincipal.getDetener()) {
+                getModelo().detenernivel();
+            } else if (boton == ventanaPrincipal.getNewgame()){
+                getModelo().cargarnivel();
             }
         }
     }
@@ -80,5 +78,9 @@ public class controller implements MouseListener,ActionListener, ComponentListen
 
     public void stateChanged(ChangeEvent e) {
 
+    }
+
+    public model getModelo() {
+        return modelo;
     }
 }

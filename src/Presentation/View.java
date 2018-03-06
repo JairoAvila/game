@@ -1,18 +1,23 @@
 package Presentation;
 
+import logica.Bot;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseListener;
+import java.awt.geom.Rectangle2D;
 
 public class View extends JFrame {
 
     //Atributos
 
-    private JLabel rutina;
+    private JLabel text1;
+    private JButton newgame;
     private JButton iniciar;
     private JButton detener;
     private JButton limpiar;
     private JButton avanzar;
     private JButton girar;
-    private JButton girarA;
     private JButton alumbrar;
     private JButton traslado;
     private JList listacciones;
@@ -20,11 +25,13 @@ public class View extends JFrame {
     private DefaultListModel dlmA = new DefaultListModel();
     private controller controlVista;
     private int posX, posY;
+    private final model Modelo;
 
 
     //Metodo Constructor
-    public View(){
+    public View(model Modelo){
         canvas1 = new Dibujo();
+        this.Modelo = Modelo;
         initComponents();
         capturaEventos();
     }
@@ -35,38 +42,38 @@ public class View extends JFrame {
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        rutina = new JLabel("Lista de Acciones");
+        text1 = new JLabel("Lista de Acciones");
+        newgame = new JButton("Nuevo Juego");
         iniciar = new JButton("Iniciar");
         detener = new JButton("Detener");
         limpiar = new JButton("Limpiar");
         avanzar = new JButton("Avanzar");
-        girar = new JButton("Girar Horario");
-        girarA = new JButton("Girar Antihorario");
+        girar = new JButton("Girar");
         alumbrar = new JButton("Alumbrar");
         traslado = new JButton("Traslado");
         listacciones = new JList();
 
         add(canvas1);
-        add(rutina);
+        add(text1);
+        add(newgame);
         add(iniciar);
         add(detener);
         add(limpiar);
         add(avanzar);
         add(girar);
-        add(girarA);
         add(alumbrar);
         add(traslado);
         add(listacciones);
 
-        rutina.reshape(550,30,200,20);
+        text1.reshape(550,30,200,20);
+        newgame.reshape(760,100,100,20);
         iniciar.reshape(760,150, 100, 20);
         detener.reshape(760,200, 100, 20);
         limpiar.reshape(760,250,100,20);
         avanzar.reshape(70,530, 100, 20);
         girar.reshape(200,530, 100, 20);
         alumbrar.reshape(330,530, 100, 20);
-        girarA.reshape(100, 560, 150,20);
-        traslado.reshape(300, 560, 100,20);
+        traslado.reshape(200, 560, 100,20);
         listacciones.reshape(550,60,200,300);
 
         avanzar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -78,12 +85,6 @@ public class View extends JFrame {
         girar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 girarMouseClicked(evt);
-            }
-        });
-
-        girarA.addMouseListener(new java.awt.event.MouseAdapter(){
-            public void mouseClicked(java.awt.event.MouseEvent evt){
-                girarAMouseClicked(evt);
             }
         });
 
@@ -117,11 +118,7 @@ public class View extends JFrame {
     private void capturaEventos() {
         iniciar.addActionListener(getControl());
         detener.addActionListener(getControl());
-        avanzar.addActionListener(getControl());
-        girar.addActionListener(getControl());
-        girarA.addActionListener(getControl());
-        limpiar.addActionListener(getControl());
-        alumbrar.addActionListener(getControl());
+        newgame.addActionListener(getControl());
     }
 
 
@@ -140,16 +137,6 @@ public class View extends JFrame {
         // TODO add your handling code here:
         try {
             dlmA.addElement("girar");
-            listacciones.setModel(dlmA);
-        } catch (Exception er) {
-
-        }
-    }
-
-    private void girarAMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-        try {
-            dlmA.addElement("girarA");
             listacciones.setModel(dlmA);
         } catch (Exception er) {
 
@@ -179,8 +166,9 @@ public class View extends JFrame {
     private void trasladoMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         try {
-            canvas1.setXcircle(2);
-            canvas1.setYcircle(2);
+            Color[][] colores = canvas1.getColor();
+            //canvas1.setXcircle(2);
+            //canvas1.setYcircle(2);
             repaint();
 
         } catch (Exception er) {
@@ -200,19 +188,15 @@ public class View extends JFrame {
         return detener;
     }
 
-    public JButton getAvanzar() {
-        return avanzar;
+    public JButton getNewgame() {
+        return newgame;
     }
 
-    public JButton getGirar() {
-        return girar;
+    public Dibujo getCanvas1() {
+        return canvas1;
     }
 
-    public JButton getGirarA() {
-        return girarA;
-    }
-
-    public JLabel getRutina() {
-        return rutina;
+    public model getModelo() {
+        return Modelo;
     }
 }
