@@ -36,6 +36,8 @@ public class controller implements MouseListener,ActionListener, ComponentListen
                 getModelo().detenernivel();
             } else if (boton == ventanaPrincipal.getNewgame()){
                 getModelo().cargarnivel();
+            } else if (boton == ventanaPrincipal.getReiniciar()){
+                getModelo().reiniciar();
             }
         }
     }

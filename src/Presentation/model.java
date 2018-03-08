@@ -18,6 +18,7 @@ public class model implements Runnable {
     private Rutina rutina;
     private Thread hiloDibujo;
     private ArrayList<String> pasos;
+    private Boolean flagHilo = true;
 
     public View getVentanaPrincipal() {
         if(ventanaPrincipal == null){
@@ -51,6 +52,7 @@ public class model implements Runnable {
         pasos = conversor(getVentanaPrincipal().getDlmA());
         if(pasos.size() > 0){
            getVentanaPrincipal().getIniciar().setEnabled(false);
+           getVentanaPrincipal().getDetener().setEnabled(true);
            hiloDibujo = new Thread(this,"HILO1");
            hiloDibujo.start();
         }
@@ -92,34 +94,115 @@ public class model implements Runnable {
         getVentanaPrincipal().getNewgame().setEnabled(false);
         getVentanaPrincipal().getIniciar().setEnabled(true);
         getVentanaPrincipal().getDetener().setEnabled(true);
+        getVentanaPrincipal().getReiniciar().setEnabled(false);
         getVentanaPrincipal().getLimpiar().setEnabled(true);
+        getVentanaPrincipal().getAvanzar().setEnabled(true);
+        getVentanaPrincipal().getGirar().setEnabled(true);
+        getVentanaPrincipal().getAlumbrar().setEnabled(true);
     }
 
     public void detenernivel(){
+        flagHilo = false;
+        getVentanaPrincipal().getDetener().setEnabled(false);
+        getVentanaPrincipal().getReiniciar().setEnabled(true);
+    }
+
+    public void reiniciar(){
+        flagHilo = true;
         Rectangle2D[][] casillas = getVentanaPrincipal().getCanvas1().getCasilla();
         getTablero().setCentro(((int) casillas[0][0].getCenterX() + (int) casillas[0][0].getCenterY())/2);
         getBot().setCoordenada("0,0");
-        actualizarBot((int) casillas[0][0].getCenterX(), (int) casillas[0][0].getCenterY());
+        actualizarBot(false, 0,0, (int) casillas[0][0].getCenterX(), (int) casillas[0][0].getCenterY());
         getRutina().getMapeo().clear();
         getVentanaPrincipal().getIniciar().setEnabled(true);
+        getVentanaPrincipal().getDetener().setEnabled(false);
+        getVentanaPrincipal().getReiniciar().setEnabled(false);
     }
+
     public void dibujarBot(int x, int y){
         getBot().setPosisionX(x);
         getBot().setPosisionY(y);
-        getBot().setDireccion(23);
+        getBot().setDireccion(21);
         Graphics2D g = (Graphics2D) getVentanaPrincipal().getCanvas1().getGraphics();
         ImageIcon Img = new ImageIcon(getClass().getResource("/imagenes/car1.png"));
         g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
         g.drawImage(Img.getImage(), getBot().getPosisionX(), getBot().getPosisionY() , null);
     }
 
-    public void actualizarBot(int x, int y){
-        getBot().setPosisionX(x);
-        getBot().setPosisionY(y);
-        getBot().setDireccion(23);
-        getVentanaPrincipal().getCanvas1().setRobot(getBot());
-        getVentanaPrincipal().repaint();
+    public void actualizarBot(Boolean bandera, int xold, int yold, int xnew, int ynew) {
+        if (bandera) {
+            int x = xnew - xold;
+            int y = ynew - yold;
+            if (x != 0) {
+                if (x > 0) {
+                    while (xold < xnew) {
+                        if(flagHilo){
+                            xold = xold + 1;
+                            animacionBot(true, xold);
+                        } else {
+                            break;
+                        }
 
+
+                    }
+                } else {
+                    while (xold > xnew) {
+                        if(flagHilo) {
+                            xold = xold + 1;
+                            animacionBot(true, xold);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            } else {
+                if (y > 0) {
+                    while (yold < ynew) {
+                        if(flagHilo) {
+                            yold = yold + 1;
+                            animacionBot(false, yold);
+                        } else {
+                            break;
+                        }
+                    }
+
+                } else {
+                    while (yold > ynew) {
+                        if(flagHilo) {
+                            yold = yold - 1;
+                            animacionBot(false, yold);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            getBot().setPosisionX(xnew);
+            getBot().setPosisionY(ynew);
+            getBot().setDireccion(23);
+            getVentanaPrincipal().getCanvas1().setRobot(getBot());
+            getVentanaPrincipal().repaint();
+        }
+    }
+
+    public void animacionBot(Boolean flag, int valor){
+        try {
+            Thread.sleep(25);
+            if(flag){
+                getBot().setPosisionX(valor);
+            } else {
+                getBot().setPosisionY(valor);
+            }
+            getBot().setDireccion(21);
+            getVentanaPrincipal().getCanvas1().setRobot(getBot());
+            getVentanaPrincipal().repaint();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public Color traerColor(int num){
@@ -147,7 +230,7 @@ public class model implements Runnable {
                 System.out.println(2);
                 break;
             case "alumbrar":
-                System.out.println(3);
+                alumbrar();
                 break;
         }
     }
@@ -156,7 +239,11 @@ public class model implements Runnable {
         getVentanaPrincipal().setVisible(true);
         getVentanaPrincipal().getIniciar().setEnabled(false);
         getVentanaPrincipal().getDetener().setEnabled(false);
+        getVentanaPrincipal().getReiniciar().setEnabled(false);
         getVentanaPrincipal().getLimpiar().setEnabled(false);
+        getVentanaPrincipal().getAvanzar().setEnabled(false);
+        getVentanaPrincipal().getGirar().setEnabled(false);
+        getVentanaPrincipal().getAlumbrar().setEnabled(false);
     }
 
     public void avanzar(){
@@ -172,11 +259,24 @@ public class model implements Runnable {
                         getRutina().getMapeo().add(getBot().getCoordenada());
                         getBot().setCoordenada(casillaAnalisis);
                         Rectangle2D[][] casillas = getVentanaPrincipal().getCanvas1().getCasilla();
-                        actualizarBot((int) casillas[x][y].getCenterX(), (int) casillas[x][y].getCenterY());
+                        actualizarBot(true, getBot().getPosisionX(), getBot().getPosisionY(), (int) casillas[x][y].getCenterX(), (int) casillas[x][y].getCenterY());
                         break;
                     }
                 }
             }
+        }
+    }
+
+    public void alumbrar(){
+        String[] posicion = getBot().getCoordenada().split(",");
+        int x = Integer.parseInt(posicion[0]);
+        int y = Integer.parseInt(posicion[1]);
+        Boolean estado = getTablero().verificacionFinciclo(x,y);
+        if(estado){
+            JOptionPane.showMessageDialog(getVentanaPrincipal(),"Felicidades, eres el ganadaor");
+        }
+        else {
+            JOptionPane.showMessageDialog(getVentanaPrincipal(),"Lo sentimos, no le atinaste a la tecla azul");
         }
     }
 

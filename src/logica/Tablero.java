@@ -40,6 +40,22 @@ public class Tablero {
         return estado;
     }
 
+    public Boolean verificacionFinciclo(int x, int y){
+        Boolean estado = false;
+        switch (tableroIni[x][y]){
+            case CELDA_ACTIVA:
+                estado = false;
+                break;
+            case  CELDA_INACTIVA:
+                estado = false;
+                break;
+            case  CELDA_NEUTRAL:
+                estado = true;
+                break;
+        }
+        return estado;
+    }
+
     public int[][] getTableroIni() {
         return tableroIni;
     }
