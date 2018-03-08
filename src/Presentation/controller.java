@@ -31,7 +31,7 @@ public class controller implements MouseListener,ActionListener, ComponentListen
             JButton boton = (JButton) e.getSource();
 
             if (boton == ventanaPrincipal.getIniciar()) {
-                System.out.println("RUN");
+                getModelo().ejecutarcomandos();
             } else if (boton == ventanaPrincipal.getDetener()) {
                 getModelo().detenernivel();
             } else if (boton == ventanaPrincipal.getNewgame()){

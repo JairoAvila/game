@@ -192,6 +192,10 @@ public class View extends JFrame {
         return newgame;
     }
 
+    public JButton getLimpiar() {
+        return limpiar;
+    }
+
     public Dibujo getCanvas1() {
         return canvas1;
     }
@@ -199,4 +203,5 @@ public class View extends JFrame {
     public model getModelo() {
         return Modelo;
     }
+
 }

@@ -5,6 +5,7 @@ import logica.Bot;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 public class Dibujo extends JPanel {
@@ -61,13 +62,14 @@ public class Dibujo extends JPanel {
                     int posy = (int) casillas[i][j].getY();
                     int width = (int) casillas[i][j].getWidth();
                     int height = (int) casillas[i][j].getHeight();
-                    g.setColor(color[i][j]);
-                    g.fillRect(posx,posy,width,height);
+                    g2.setColor(color[i][j]);
+                    g2.fillRect(posx,posy,width,height);
                 }
             }
-            g.setColor(Color.GREEN);
-            g.fillRect(robot.getPosisionX(),robot.getPosisionY(),50,50);
-            System.out.println(robot.getPosisionX());
+
+            ImageIcon Img = new ImageIcon(getClass().getResource("/imagenes/car1.png"));
+            g2.rotate(getRobot().angulos(getRobot().getDireccion()));
+            g2.drawImage(Img.getImage(), getRobot().getPosisionX(), getRobot().getPosisionY() , null);
         }
     }
 

@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Rutina{
 
@@ -9,11 +10,13 @@ public class Rutina{
     public final static int GIRAR_HORARIO = 13;
     public final static int GIRAR_ANTIHORARIO = 14;
 
+    private ArrayList<String> mapeo = new ArrayList<String>();
+
     private ArrayList<Integer> rutina;
     private int puntero;
     private Tablero tablero;
 
-    public Rutina(ArrayList<Integer> rutina){
+    public Rutina(){
         this.rutina = rutina;
         tablero = new Tablero();
         puntero = 0;
@@ -68,5 +71,13 @@ public class Rutina{
     public
     Tablero getTablero() {
         return tablero;
+    }
+
+    public ArrayList<String> getMapeo() {
+        return mapeo;
+    }
+
+    public void setMapeo(ArrayList<String> mapeo) {
+        this.mapeo = mapeo;
     }
 }

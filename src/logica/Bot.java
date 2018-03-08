@@ -9,9 +9,10 @@ public class Bot   {
     public static final int SUR = 23;
     public static final int OCCIDENTE = 24;
 
-    private int posisionX=100;
-    private int posisionY=100;
+    private int posisionX;
+    private int posisionY;
     private int direccion;
+    private String coordenada;
 
 
     private Tablero tablero;
@@ -55,6 +56,25 @@ public class Bot   {
                 break;
         }
         System.out.println("Gira sentido Antihorario");
+    }
+
+    public double angulos(int direccion) {
+        double angulo=0;
+        switch (direccion){
+            case NORTE:
+                angulo = Math.PI;
+                break;
+            case OCCIDENTE:
+                angulo = Math.PI/2;
+                break;
+            case SUR:
+                angulo = 2*Math.PI;
+                break;
+            case ORIENTE:
+                angulo = (3*Math.PI)/2;
+                break;
+        }
+        return angulo;
     }
 
     public void Avanzar (){
@@ -122,5 +142,13 @@ public class Bot   {
 
     public void setPosisionY(int getPosisionY) {
         this.posisionY = getPosisionY;
+    }
+
+    public String getCoordenada() {
+        return coordenada;
+    }
+
+    public void setCoordenada(String coordenada) {
+        this.coordenada = coordenada;
     }
 }
