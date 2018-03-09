@@ -122,7 +122,7 @@ public class model implements Runnable {
     public void dibujarBot(int x, int y){
         getBot().setPosisionX(x);
         getBot().setPosisionY(y);
-        getBot().setDireccion(21);
+        getBot().setDireccion(getBot().SUR);
         Graphics2D g = (Graphics2D) getVentanaPrincipal().getCanvas1().getGraphics();
         ImageIcon Img = new ImageIcon(getClass().getResource("/imagenes/car1.png"));
         g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
@@ -148,7 +148,7 @@ public class model implements Runnable {
                 } else {
                     while (xold > xnew) {
                         if(flagHilo) {
-                            xold = xold + 1;
+                            xold = xold - 1;
                             animacionBot(true, xold);
                         } else {
                             break;
@@ -183,7 +183,7 @@ public class model implements Runnable {
         {
             getBot().setPosisionX(xnew);
             getBot().setPosisionY(ynew);
-            getBot().setDireccion(23);
+            getBot().setDireccion(getBot().SUR);
             getVentanaPrincipal().getCanvas1().setRobot(getBot());
             getVentanaPrincipal().repaint();
         }
@@ -197,7 +197,7 @@ public class model implements Runnable {
             } else {
                 getBot().setPosisionY(valor);
             }
-            getBot().setDireccion(21);
+            getBot().setDireccion(getBot().SUR);
             getVentanaPrincipal().getCanvas1().setRobot(getBot());
             getVentanaPrincipal().repaint();
         } catch (InterruptedException e) {

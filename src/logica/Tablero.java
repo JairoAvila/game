@@ -12,10 +12,11 @@ public class Tablero {
     public static final int CELDA_INACTIVA = 0;
     public static final int CELDA_BLOQUEADA = 2;
     public static final int CELDA_NEUTRAL = 3;
+
     private int tableroIni[][] = {
-            {CELDA_ACTIVA, CELDA_INACTIVA, CELDA_NEUTRAL},
-            {CELDA_ACTIVA, CELDA_INACTIVA, CELDA_ACTIVA},
             {CELDA_ACTIVA, CELDA_ACTIVA, CELDA_ACTIVA},
+            {CELDA_INACTIVA, CELDA_INACTIVA, CELDA_ACTIVA},
+            {CELDA_INACTIVA, CELDA_NEUTRAL, CELDA_ACTIVA},
     };
     public int tablero[][] = tableroIni;
 
@@ -26,17 +27,23 @@ public class Tablero {
 
     public Boolean verificacionCasilla(int x, int y){
         Boolean estado = false;
-        switch (tableroIni[x][y]){
-            case CELDA_ACTIVA:
-                estado = true;
-                break;
-            case  CELDA_INACTIVA:
-                estado = false;
-                break;
-            case  CELDA_NEUTRAL:
-                estado = true;
-                break;
+        try {
+            switch (tableroIni[x][y]){
+                case CELDA_ACTIVA:
+                    estado = true;
+                    break;
+                case  CELDA_INACTIVA:
+                    estado = false;
+                    break;
+                case  CELDA_NEUTRAL:
+                    estado = true;
+                    break;
+            }
+        }catch (ArrayIndexOutOfBoundsException ex){
+            return false;
         }
+
+
         return estado;
     }
 
