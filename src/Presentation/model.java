@@ -124,8 +124,9 @@ public class model implements Runnable {
         getBot().setPosisionY(y);
         getBot().setDireccion(getBot().SUR);
         Graphics2D g = (Graphics2D) getVentanaPrincipal().getCanvas1().getGraphics();
-        ImageIcon Img = new ImageIcon(getClass().getResource("/imagenes/car1.png"));
-        g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
+        getBot().setImagen("/imagenes/car1.png");
+        ImageIcon Img = new ImageIcon(getClass().getResource(getBot().getImagen()));
+        //g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
         g.drawImage(Img.getImage(), getBot().getPosisionX(), getBot().getPosisionY() , null);
     }
 
@@ -134,7 +135,7 @@ public class model implements Runnable {
             int x = xnew - xold;
             int y = ynew - yold;
             if (x != 0) {
-                if (x > 0) {
+                if (getBot().getDireccion() == getBot().ORIENTE) {
                     while (xold < xnew) {
                         if(flagHilo){
                             xold = xold + 1;
@@ -156,7 +157,7 @@ public class model implements Runnable {
                     }
                 }
             } else {
-                if (y > 0) {
+                if (getBot().getDireccion() == getBot().SUR) {
                     while (yold < ynew) {
                         if(flagHilo) {
                             yold = yold + 1;
@@ -197,7 +198,7 @@ public class model implements Runnable {
             } else {
                 getBot().setPosisionY(valor);
             }
-            getBot().setDireccion(getBot().SUR);
+           // getBot().setDireccion();
             getVentanaPrincipal().getCanvas1().setRobot(getBot());
             getVentanaPrincipal().repaint();
         } catch (InterruptedException e) {
@@ -227,7 +228,7 @@ public class model implements Runnable {
                 avanzar();
                 break;
             case "girar":
-                System.out.println(2);
+                girar();
                 break;
             case "alumbrar":
                 alumbrar();
@@ -247,7 +248,17 @@ public class model implements Runnable {
     }
 
     public void avanzar(){
-        for(int i = 0; i<4; i++){
+            int i = 0;
+            if(getBot().getDireccion() == getBot().SUR){
+                i=2;
+            } else if(getBot().getDireccion() == getBot().ORIENTE){
+                i=1;
+            } else if(getBot().getDireccion() == getBot().NORTE){
+                i=0;
+            } else if(getBot().getDireccion() == getBot().OCCIDENTE) {
+                i=3;
+            }
+
             String casillaAnalisis = analisisCasilla(i);
             String[] coordenada = casillaAnalisis.split(",");
             int x = Integer.parseInt(coordenada[0]);
@@ -260,10 +271,41 @@ public class model implements Runnable {
                         getBot().setCoordenada(casillaAnalisis);
                         Rectangle2D[][] casillas = getVentanaPrincipal().getCanvas1().getCasilla();
                         actualizarBot(true, getBot().getPosisionX(), getBot().getPosisionY(), (int) casillas[x][y].getCenterX(), (int) casillas[x][y].getCenterY());
-                        break;
                     }
                 }
             }
+    }
+
+    public void girar(){
+
+        getBot().GirarHorario();
+
+        if(getBot().getDireccion()==getBot().SUR){
+            Graphics2D g = (Graphics2D) getVentanaPrincipal().getCanvas1().getGraphics();
+            getBot().setImagen("/imagenes/car1.png");
+            ImageIcon Img = new ImageIcon(getClass().getResource(getBot().getImagen()));
+            //g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
+            g.drawImage(Img.getImage(), getBot().getPosisionX(), getBot().getPosisionY() , null);
+        }else if (getBot().getDireccion() == getBot().ORIENTE){
+            Graphics2D g = (Graphics2D) getVentanaPrincipal().getCanvas1().getGraphics();
+            getBot().setImagen("/imagenes/derecha.png");
+            ImageIcon Img = new ImageIcon(getClass().getResource(getBot().getImagen()));
+            //g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
+            g.drawImage(Img.getImage(), getBot().getPosisionX(), getBot().getPosisionY() , null);
+        }
+        else if (getBot().getDireccion() == getBot().NORTE){
+            Graphics2D g = (Graphics2D) getVentanaPrincipal().getCanvas1().getGraphics();
+            getBot().setImagen("/imagenes/arriba.png");
+            ImageIcon Img = new ImageIcon(getClass().getResource(getBot().getImagen()));
+            //g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
+            g.drawImage(Img.getImage(), getBot().getPosisionX(), getBot().getPosisionY() , null);
+        }
+        else if (getBot().getDireccion() == getBot().OCCIDENTE){
+            Graphics2D g = (Graphics2D) getVentanaPrincipal().getCanvas1().getGraphics();
+            getBot().setImagen("/imagenes/izquierda.png");
+            ImageIcon Img = new ImageIcon(getClass().getResource(getBot().getImagen()));
+            //g.rotate(getBot().angulos(getBot().getDireccion()), 100, 100);
+            g.drawImage(Img.getImage(), getBot().getPosisionX(), getBot().getPosisionY() , null);
         }
     }
 

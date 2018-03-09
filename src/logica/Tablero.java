@@ -15,8 +15,8 @@ public class Tablero {
 
     private int tableroIni[][] = {
             {CELDA_ACTIVA, CELDA_ACTIVA, CELDA_ACTIVA},
-            {CELDA_INACTIVA, CELDA_INACTIVA, CELDA_ACTIVA},
-            {CELDA_INACTIVA, CELDA_NEUTRAL, CELDA_ACTIVA},
+            {CELDA_ACTIVA, CELDA_INACTIVA, CELDA_ACTIVA},
+            {CELDA_ACTIVA, CELDA_NEUTRAL, CELDA_ACTIVA},
     };
     public int tablero[][] = tableroIni;
 

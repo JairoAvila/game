@@ -67,8 +67,8 @@ public class Dibujo extends JPanel {
                 }
             }
 
-            ImageIcon Img = new ImageIcon(getClass().getResource("/imagenes/car1.png"));
-            g2.rotate(getRobot().angulos(getRobot().getDireccion()));
+            ImageIcon Img = new ImageIcon(getClass().getResource(getRobot().getImagen()));
+            //g2.rotate(getRobot().angulos(getRobot().getDireccion()));
             g2.drawImage(Img.getImage(), getRobot().getPosisionX(), getRobot().getPosisionY() , null);
         }
     }

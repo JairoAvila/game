@@ -14,6 +14,7 @@ public class Bot   {
     private int direccion;
     private String coordenada;
 
+    private String imagen;
 
     private Tablero tablero;
 
@@ -150,5 +151,15 @@ public class Bot   {
 
     public void setCoordenada(String coordenada) {
         this.coordenada = coordenada;
+    }
+
+    public
+    String getImagen() {
+        return imagen;
+    }
+
+    public
+    void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
